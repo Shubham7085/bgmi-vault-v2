@@ -6,7 +6,7 @@ font-family:Arial,sans-serif;
 }
 
 body{
-background:#050816;
+background:#070b1a;
 color:white;
 }
 
@@ -14,53 +14,99 @@ color:white;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:18px;
-background:#0b1023;
-border-bottom:1px solid #00e5ff;
+padding:20px;
+background:#10172b;
+border-bottom:2px solid cyan;
 }
 
-.navbar h2{
+.logo{
+font-size:28px;
+font-weight:bold;
 color:#00e5ff;
-font-size:22px;
 }
 
 nav a{
 color:white;
 text-decoration:none;
-margin-left:18px;
-font-size:15px;
+margin-left:20px;
+font-size:18px;
+transition:.3s;
+}
+
+nav a:hover{
+color:#00e5ff;
 }
 
 .hero{
-padding:70px 25px;
 text-align:center;
+padding:80px 20px;
 }
 
 .hero h1{
-font-size:34px;
+font-size:50px;
 color:#00e5ff;
 margin-bottom:20px;
 }
 
 .hero p{
-font-size:17px;
-color:#cbd5e1;
+font-size:22px;
+max-width:700px;
+margin:auto;
 line-height:1.6;
-margin-bottom:35px;
+color:#d6d6d6;
 }
 
-.buttons button{
+.buttons{
+margin-top:40px;
+}
+
+button{
+padding:15px 35px;
+margin:10px;
+font-size:18px;
+border:none;
+border-radius:10px;
 background:#00e5ff;
 color:black;
-border:none;
-padding:14px 26px;
-margin:8px;
-border-radius:12px;
 font-weight:bold;
 cursor:pointer;
+transition:.3s;
 }
 
-.buttons button:hover{
-transform:scale(1.05);
+button:hover{
+transform:scale(1.08);
+background:white;
+}
+
+.features{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+padding:50px;
+}
+
+.card{
+background:#11192d;
+padding:25px;
+border-radius:15px;
+border:1px solid #00e5ff;
 transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 0 20px cyan;
+}
+
+.card h2{
+margin-bottom:15px;
+color:#00e5ff;
+}
+
+footer{
+text-align:center;
+padding:20px;
+background:#10172b;
+margin-top:40px;
+color:#ccc;
 }
