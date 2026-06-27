@@ -110,3 +110,14 @@ background:#10172b;
 margin-top:40px;
 color:#ccc;
 }
+
+.search-box{
+width:90%;
+max-width:450px;
+padding:15px;
+font-size:18px;
+border:none;
+border-radius:10px;
+outline:none;
+margin-top:20px;
+}
