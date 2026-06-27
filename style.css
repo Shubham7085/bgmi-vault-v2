@@ -1,123 +1,86 @@
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap');
+
+/* Base Styles */
+html {
+  font-family: 'Inter', sans-serif;
+  scroll-behavior: smooth;
+  background-color: #0d0f12;
+  color: #f3f4f6;
 }
 
-body{
-background:#070b1a;
-color:white;
+/* Custom Scrollbar for Tactical Theme */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
-.navbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px;
-background:#10172b;
-border-bottom:2px solid cyan;
+::-webkit-scrollbar-track {
+  background: #0f1115;
 }
 
-.logo{
-font-size:28px;
-font-weight:bold;
-color:#00e5ff;
+::-webkit-scrollbar-thumb {
+  background: #2b303b;
+  border-radius: 4px;
 }
 
-nav a{
-color:white;
-text-decoration:none;
-margin-left:20px;
-font-size:18px;
-transition:.3s;
+::-webkit-scrollbar-thumb:hover {
+  background: #eab308; /* yellow-500 bgmi accent */
 }
 
-nav a:hover{
-color:#00e5ff;
+/* Custom Tactical Glassmorphism */
+.tactical-card {
+  background: rgba(17, 21, 28, 0.85);
+  border: 1px solid rgba(234, 179, 8, 0.15);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.hero{
-text-align:center;
-padding:80px 20px;
+.tactical-card:hover {
+  border-color: rgba(234, 179, 8, 0.4);
+  box-shadow: 0 10px 40px rgba(234, 179, 8, 0.05);
 }
 
-.hero h1{
-font-size:50px;
-color:#00e5ff;
-margin-bottom:20px;
+/* Pulse Glow Effects */
+.status-pulse-online {
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.6);
+  animation: pulse-green 2s infinite;
 }
 
-.hero p{
-font-size:22px;
-max-width:700px;
-margin:auto;
-line-height:1.6;
-color:#d6d6d6;
+.status-pulse-ingame {
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
+  animation: pulse-blue 2s infinite;
 }
 
-.buttons{
-margin-top:40px;
+.status-pulse-offline {
+  box-shadow: 0 0 10px rgba(156, 163, 175, 0.3);
 }
 
-button{
-padding:15px 35px;
-margin:10px;
-font-size:18px;
-border:none;
-border-radius:10px;
-background:#00e5ff;
-color:black;
-font-weight:bold;
-cursor:pointer;
-transition:.3s;
+@keyframes pulse-green {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
 }
 
-button:hover{
-transform:scale(1.08);
-background:white;
+@keyframes pulse-blue {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(59, 130, 246, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
 }
 
-.features{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
-padding:50px;
+/* Custom Textures */
+.bg-tactical-grid {
+  background-image: radial-gradient(rgba(234, 179, 8, 0.07) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-.card{
-background:#11192d;
-padding:25px;
-border-radius:15px;
-border:1px solid #00e5ff;
-transition:.3s;
+/* Space Grotesk Font Classes */
+.font-tactical {
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: -0.02em;
 }
 
-.card:hover{
-transform:translateY(-8px);
-box-shadow:0 0 20px cyan;
-}
-
-.card h2{
-margin-bottom:15px;
-color:#00e5ff;
-}
-
-footer{
-text-align:center;
-padding:20px;
-background:#10172b;
-margin-top:40px;
-color:#ccc;
-}
-
-.search-box{
-width:90%;
-max-width:450px;
-padding:15px;
-font-size:18px;
-border:none;
-border-radius:10px;
-outline:none;
-margin-top:20px;
+/* JetBrains Mono Classes */
+.font-mono-tactical {
+  font-family: 'JetBrains Mono', monospace;
 }

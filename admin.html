@@ -1,58 +1,263 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BGMI Friends Vault - Admin</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BGMI Friends Vault - Admin Control Center</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            tactical: {
+              black: '#0d0f12',
+              dark: '#0f1115',
+              card: '#11151c',
+              gold: '#eab308',
+            }
+          }
+        }
+      }
+    }
+  </script>
 </head>
+<body class="bg-tactical-black bg-tactical-grid text-gray-100 min-h-screen flex flex-col justify-between">
 
-<body>
+  <!-- Header -->
+  <header class="border-b border-yellow-500/10 bg-[#0f1115]/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-amber-600 to-yellow-400 p-0.5 shadow-lg shadow-amber-500/10">
+          <div class="w-full h-full bg-[#0d0f12] rounded-[7px] flex items-center justify-center">
+            <span class="text-amber-500 font-bold text-lg font-tactical">BF</span>
+          </div>
+        </div>
+        <div>
+          <h1 class="text-base font-bold text-white tracking-tight font-tactical">BGMI FRIENDS VAULT</h1>
+          <p class="text-[9px] text-amber-500 font-bold tracking-widest font-mono-tactical">SECURE ADMIN CONSOLE</p>
+        </div>
+      </a>
 
-<header class="navbar">
-<div class="logo">🎮 BGMI Friends Vault</div>
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-2">
+        <a href="index.html" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-400 hover:text-white transition-all font-tactical">Dashboard</a>
+        <a href="friends.html" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-400 hover:text-white transition-all font-tactical">Squad Roster</a>
+        <a href="leaderboard.html" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-400 hover:text-white transition-all font-tactical">Leaderboard</a>
+        <a href="admin.html" class="px-3 py-1.5 rounded-md text-sm font-semibold text-yellow-500 bg-yellow-500/10 border border-yellow-500/20 font-tactical flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping"></span>Admin Panel</a>
+      </nav>
 
-<nav>
-<a href="index.html">Home</a>
-<a href="friends.html">Friends</a>
-<a href="leaderboard.html">Leaderboard</a>
-<a href="login.html">Logout</a>
-</nav>
+      <!-- Right Actions -->
+      <div class="flex items-center gap-3">
+        <span id="auth-badge" class="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-zinc-800 text-zinc-400 border border-zinc-700 font-mono-tactical">SECURE COMMS</span>
+        <div id="user-info" class="hidden items-center gap-2">
+          <span id="user-display-email" class="text-xs text-gray-400 font-mono-tactical"></span>
+          <button id="logout-btn" class="text-xs font-semibold px-2.5 py-1.5 rounded-md text-red-400 bg-red-500/5 hover:bg-red-500/10 border border-red-500/20 transition-all font-tactical">Sign Out</button>
+        </div>
+      </div>
+    </div>
+  </header>
 
-</header>
+  <!-- Route Guards Loader (will reveal main element once authorized) -->
+  <div id="route-guard-loader" class="flex-grow flex flex-col items-center justify-center text-gray-500">
+    <svg class="animate-spin h-8 w-8 text-yellow-500 mb-3" fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    </svg>
+    <span class="text-xs font-mono-tactical uppercase tracking-widest">VERIFYING ADMIN SIGNATURE...</span>
+  </div>
 
-<section class="hero">
+  <!-- Main Panel Content -->
+  <main id="admin-main-content" class="hidden flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <div class="mb-8 flex items-center justify-between">
+      <div>
+        <h2 id="panel-title" class="text-2xl md:text-3xl font-black text-white font-tactical uppercase tracking-tight">ADD NEW SOLDIER</h2>
+        <p id="panel-subtitle" class="text-xs text-amber-500 font-bold font-mono-tactical tracking-widest mt-1">SQUAD DEPLOYMENT MANIFEST</p>
+      </div>
+      <a href="friends.html" class="px-4 py-2 rounded-xl text-xs font-semibold text-gray-400 hover:text-white bg-zinc-900 border border-zinc-800 transition-all font-tactical">
+        &larr; Return to Roster
+      </a>
+    </div>
 
-<h1>Admin Dashboard</h1>
+    <!-- Main Entry Form Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      <!-- Primary Form Column -->
+      <form id="friend-form" class="lg:col-span-2 space-y-6">
+        
+        <div class="tactical-card rounded-2xl p-6 md:p-8 space-y-5">
+          <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-2 font-mono-tactical border-b border-zinc-800/80 pb-2">Identity & Role Specs</h3>
 
-<div class="features">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Name -->
+            <div>
+              <label for="name" class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5 font-tactical">In-Game Nickname</label>
+              <input type="text" id="name" required placeholder="e.g. MortaL" 
+                class="w-full px-4 py-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800 text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500/40 transition-all text-sm font-tactical">
+            </div>
 
-<div class="card">
-<h2>➕ Add Friend</h2>
-<p>Add new BGMI friend.</p>
-<button>Add Friend</button>
-</div>
+            <!-- BGMI ID -->
+            <div>
+              <label for="bgmiId" class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5 font-tactical">BGMI Character ID</label>
+              <input type="text" id="bgmiId" required placeholder="e.g. 5123456789" 
+                class="w-full px-4 py-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800 text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500/40 transition-all text-sm font-tactical">
+            </div>
+          </div>
 
-<div class="card">
-<h2>🖼 Upload Image</h2>
-<p>Upload profile picture.</p>
-<button>Upload</button>
-</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Role selection -->
+            <div>
+              <label for="role" class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5 font-tactical">Squad Combat Role</label>
+              <select id="role" class="w-full px-3 py-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800 text-sm text-gray-300 focus:outline-none focus:border-yellow-500/40 transition-all font-tactical">
+                <option value="Assaulter">Assaulter</option>
+                <option value="Sniper">Sniper</option>
+                <option value="IGL">IGL (In-Game Leader)</option>
+                <option value="Support">Support</option>
+                <option value="Scout">Scout</option>
+                <option value="All-Rounder">All-Rounder</option>
+              </select>
+            </div>
 
-<div class="card">
-<h2>🏆 Leaderboard</h2>
-<p>Manage rankings.</p>
-<button>Open</button>
-</div>
+            <!-- Tier selection -->
+            <div>
+              <label for="tier" class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5 font-tactical">Combat Tier Rank</label>
+              <select id="tier" class="w-full px-3 py-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800 text-sm text-gray-300 focus:outline-none focus:border-yellow-500/40 transition-all font-tactical">
+                <option value="Conqueror">Conqueror</option>
+                <option value="Ace Dominator">Ace Dominator</option>
+                <option value="Ace Master">Ace Master</option>
+                <option value="Ace">Ace</option>
+                <option value="Crown">Crown</option>
+                <option value="Diamond">Diamond</option>
+                <option value="Platinum">Platinum</option>
+                <option value="Gold">Gold</option>
+                <option value="Silver">Silver</option>
+                <option value="Bronze">Bronze</option>
+              </select>
+            </div>
+          </div>
 
-<div class="card">
-<h2>👥 Total Friends</h2>
-<p id="friendCount">0</p>
-</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Fav Weapon -->
+            <div>
+              <label for="favouriteWeapon" class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5 font-tactical">Signature Armament</label>
+              <input type="text" id="favouriteWeapon" placeholder="e.g. M416 + DP-28" 
+                class="w-full px-4 py-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800 text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500/40 transition-all text-sm font-tactical">
+            </div>
 
-</div>
+            <!-- Active Status selection -->
+            <div>
+              <label for="status" class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5 font-tactical">Deployment Status</label>
+              <select id="status" class="w-full px-3 py-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800 text-sm text-gray-300 focus:outline-none focus:border-yellow-500/40 transition-all font-tactical">
+                <option value="Online">Online</option>
+                <option value="In-Game">In-Game</option>
+                <option value="Offline">Offline</option>
+              </select>
+            </div>
+          </div>
 
-</section>
+        </div>
 
+        <div class="tactical-card rounded-2xl p-6 md:p-8 space-y-5">
+          <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-2 font-mono-tactical border-b border-zinc-800/80 pb-2">Combat Efficacy Matrix</h3>
+
+          <div class="grid grid-cols-3 gap-4">
+            <!-- KD -->
+            <div>
+              <label for="kdRatio" class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 font-tactical">Kill/Death Ratio</label>
+              <input type="number" step="0.01" min="0" id="kdRatio" required placeholder="0.00" 
+                class="w-full px-3 py-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800 text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500/40 transition-all text-sm font-tactical">
+            </div>
+
+            <!-- Matches -->
+            <div>
+              <label for="matchesPlayed" class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 font-tactical">Matches Played</label>
+              <input type="number" min="0" id="matchesPlayed" required placeholder="0" 
+                class="w-full px-3 py-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800 text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500/40 transition-all text-sm font-tactical">
+            </div>
+
+            <!-- Wins -->
+            <div>
+              <label for="wins" class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 font-tactical">Squad Victories</label>
+              <input type="number" min="0" id="wins" required placeholder="0" 
+                class="w-full px-3 py-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800 text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500/40 transition-all text-sm font-tactical">
+            </div>
+          </div>
+        </div>
+
+        <!-- Action submit buttons -->
+        <div class="flex items-center gap-3">
+          <button type="submit" id="save-btn" class="flex-grow py-3.5 rounded-xl text-xs font-bold text-black bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 transition-all font-tactical uppercase tracking-wider shadow-lg shadow-yellow-500/10 flex items-center justify-center gap-2">
+            Save Roster Entry
+          </button>
+          <a href="friends.html" id="cancel-edit-btn" class="hidden px-6 py-3.5 rounded-xl text-xs font-semibold text-gray-400 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 hover:text-white transition-all font-tactical uppercase">
+            Cancel
+          </a>
+        </div>
+
+      </form>
+
+      <!-- Side Image Upload Module -->
+      <div class="space-y-6">
+        
+        <div class="tactical-card rounded-2xl p-6 flex flex-col items-center text-center">
+          <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4 font-mono-tactical border-b border-zinc-800/80 w-full pb-2">Combat Profile Avatar</h3>
+
+          <!-- Image Preview frame -->
+          <div id="image-preview" class="w-32 h-32 rounded-2xl border-2 border-dashed border-zinc-800 bg-zinc-950 flex flex-col items-center justify-center overflow-hidden mb-4 relative group">
+            <svg class="w-10 h-10 text-zinc-600 group-hover:text-yellow-500 transition-colors" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            <span class="text-[10px] text-gray-500 mt-2 font-tactical">No Avatar Uploaded</span>
+          </div>
+
+          <!-- Hidden Upload Control -->
+          <input type="file" id="image-upload" accept="image/*" class="hidden">
+          
+          <button type="button" id="upload-trigger-btn" class="w-full py-2.5 rounded-xl text-xs font-bold text-white bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 transition-all font-tactical uppercase flex items-center justify-center gap-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+            Upload Custom Image
+          </button>
+
+          <!-- Upload Progress bar -->
+          <div id="progress-container" class="w-full mt-4 hidden">
+            <div class="flex items-center justify-between text-[10px] text-gray-400 font-mono-tactical mb-1">
+              <span>COMM TRANSMITTING...</span>
+              <span id="progress-percentage">0%</span>
+            </div>
+            <div class="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden">
+              <div id="progress-bar" class="h-full bg-yellow-500 transition-all duration-300" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <p class="text-[10px] text-gray-500 mt-3 font-mono-tactical">PNG, JPG, or WEBP. Max 2MB.</p>
+        </div>
+
+        <!-- Optional preset avatars -->
+        <div class="tactical-card rounded-2xl p-6">
+          <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 font-mono-tactical border-b border-zinc-800/80 pb-2">Alternative Preset Avatars</h4>
+          <div class="grid grid-cols-4 gap-2" id="presets-grid">
+            <!-- Preset items injected dynamically -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-yellow-500/10 bg-[#0f1115] py-8 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="text-amber-500 font-black font-tactical text-sm">BFV</span>
+        <span class="text-gray-500">|</span>
+        <span class="text-xs text-gray-400 font-tactical">Battlegrounds Friends Vault &copy; 2026. Admin Comm-Link.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="admin.js"></script>
 </body>
 </html>

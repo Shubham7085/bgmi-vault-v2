@@ -1,0 +1,68 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Helper to validate the Friend schema
+    function isValidFriend(data) {
+      return data.name is string 
+        && data.name.size() > 0 
+        && data.name.size() <= 100
+        && data.bgmiId is string
+        && data.bgmiId.size() > 0
+        && data.bgmiId.size() <= 50
+        && data.role is string
+        && (data.role == 'Assaulter' || data.role == 'Sniper' || data.role == 'IGL' || data.role == 'Support' || data.role == 'Scout' || data.role == 'All-Rounder')
+        && data.tier is string
+        && (data.tier == 'Conqueror' || data.tier == 'Ace Dominator' || data.tier == 'Ace Master' || data.tier == 'Ace' || data.tier == 'Crown' || data.tier == 'Diamond' || data.tier == 'Platinum' || data.tier == 'Gold' || data.tier == 'Silver' || data.tier == 'Bronze')
+        && (data.kdRatio is number || data.kdRatio is float || data.kdRatio is int)
+        && data.kdRatio >= 0.0
+        && data.matchesPlayed is int
+        && data.matchesPlayed >= 0
+        && data.wins is int
+        && data.wins >= 0
+        && data.favouriteWeapon is string
+        && data.favouriteWeapon.size() <= 50
+        && (data.imageUrl == null || (data.imageUrl is string && data.imageUrl.size() <= 2000))
+        && data.status is string
+        && (data.status == 'Online' || data.status == 'In-Game' || data.status == 'Offline');
+    }
+
+    match /friends/{friendId} {
+      // Anyone can read and query friends
+      allow read: if true;
+
+      // Only signed-in admins can create
+      allow create: if isSignedIn() 
+        && isValidFriend(incoming());
+
+      // Only signed-in admins can update
+      allow update: if isSignedIn()
+        && isValidFriend(incoming());
+
+      // Only signed-in admins can delete
+      allow delete: if isSignedIn();
+    }
+  }
+}

@@ -3,73 +3,258 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BGMI Friends Vault</title>
+  <title>BGMI Friends Vault - Squad Dashboard</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            tactical: {
+              black: '#0d0f12',
+              dark: '#0f1115',
+              card: '#11151c',
+              gold: '#eab308',
+            }
+          }
+        }
+      }
+    }
+  </script>
 </head>
+<body class="bg-tactical-black bg-tactical-grid text-gray-100 min-h-screen flex flex-col">
 
-<body>
+  <!-- Navigation Header -->
+  <header class="border-b border-yellow-500/10 bg-[#0f1115]/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-amber-600 to-yellow-400 p-0.5 shadow-lg shadow-amber-500/10">
+          <div class="w-full h-full bg-[#0d0f12] rounded-[7px] flex items-center justify-center">
+            <span class="text-amber-500 font-bold text-lg font-tactical">BF</span>
+          </div>
+        </div>
+        <div>
+          <h1 class="text-base font-bold text-white tracking-tight font-tactical">BGMI FRIENDS VAULT</h1>
+          <p class="text-[9px] text-amber-500 font-bold tracking-widest font-mono-tactical">SQUAD COMM-LINK</p>
+        </div>
+      </a>
 
-<header class="navbar">
-  <div class="logo">
-    🎮 BGMI Friends Vault
-  </div>
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-2">
+        <a href="index.html" class="px-3 py-1.5 rounded-md text-sm font-semibold text-yellow-500 bg-yellow-500/10 border border-yellow-500/20 font-tactical">Dashboard</a>
+        <a href="friends.html" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-400 hover:text-white transition-all font-tactical">Squad Roster</a>
+        <a href="leaderboard.html" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-400 hover:text-white transition-all font-tactical">Leaderboard</a>
+        <a href="admin.html" id="admin-nav-link" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-400 hover:text-white transition-all font-tactical flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>Admin Panel</a>
+      </nav>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="friends.html">Friends</a>
-    <a href="leaderboard.html">Leaderboard</a>
-    <a href="login.html">Login</a>
-  </nav>
-</header>
+      <!-- Right Actions -->
+      <div class="flex items-center gap-3">
+        <span id="auth-badge" class="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-zinc-800 text-zinc-400 border border-zinc-700 font-mono-tactical">SECURE COMMS</span>
+        <div id="user-info" class="hidden items-center gap-2">
+          <span id="user-display-email" class="text-xs text-gray-400 font-mono-tactical"></span>
+          <button id="logout-btn" class="text-xs font-semibold px-2.5 py-1.5 rounded-md text-red-400 bg-red-500/5 hover:bg-red-500/10 border border-red-500/20 transition-all font-tactical">Sign Out</button>
+        </div>
+        <a href="login.html" id="signin-btn" class="px-3.5 py-1.5 rounded-lg text-xs font-bold text-black bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-600 hover:to-yellow-500 transition-all shadow-lg shadow-amber-500/10 font-tactical">
+          Admin Sign In
+        </a>
+      </div>
+    </div>
+  </header>
 
-<section class="hero">
-  <h1>Welcome to BGMI Friends Vault</h1>
+  <!-- Hero & Main Layout -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Hero Banner -->
+    <section class="tactical-card rounded-2xl overflow-hidden relative p-8 md:p-12 mb-8 bg-gradient-to-r from-yellow-500/10 via-transparent to-transparent">
+      <!-- Glow decoration -->
+      <div class="absolute -right-12 -top-12 w-64 h-64 bg-yellow-500/5 rounded-full blur-3xl"></div>
+      
+      <div class="max-w-2xl relative z-10">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 mb-4 font-mono-tactical">
+          <span class="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></span> SYSTEM ONLINE
+        </div>
+        <h2 class="text-3xl md:text-5xl font-black text-white font-tactical mb-4 tracking-tight leading-none uppercase">
+          Track Your Squad.<br>Own the <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-amber-500">Battlegrounds</span>.
+        </h2>
+        <p class="text-gray-400 text-sm md:text-base leading-relaxed mb-6 font-tactical">
+          Welcome to the BGMI Friends Vault. Organize squad members, compare combat ratios, check who's currently active in-game, and rank the absolute top performers of the battlegrounds.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a href="friends.html" class="px-6 py-2.5 rounded-xl text-xs font-bold text-black bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 shadow-md shadow-yellow-500/10 transition-all font-tactical uppercase">
+            View Squad Roster
+          </a>
+          <a href="leaderboard.html" class="px-6 py-2.5 rounded-xl text-xs font-bold text-white bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 transition-all font-tactical uppercase">
+            Check Leaderboard
+          </a>
+        </div>
+      </div>
+    </section>
 
-  <p>
-    Save your BGMI friends, manage your squad,
-    upload profiles and climb the leaderboard.
-  </p>
+    <!-- Squad Real-time Stats Grid -->
+    <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      
+      <!-- Stat Card 1 -->
+      <div class="tactical-card rounded-xl p-5 flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-bold text-gray-400 font-tactical uppercase tracking-wider">Squad Count</span>
+          <div class="p-1.5 rounded-lg bg-yellow-500/10 text-yellow-500">
+            <!-- Users Icon -->
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm14 10v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
+        </div>
+        <div>
+          <h3 id="stat-total-squad" class="text-2xl md:text-3xl font-bold text-white font-tactical tracking-tight">0</h3>
+          <p class="text-[10px] text-gray-500 mt-1 font-mono-tactical">Registered fighters</p>
+        </div>
+      </div>
 
-  <div class="buttons">
-    <a href="friends.html">
-      <button>Explore Friends</button>
-    </a>
+      <!-- Stat Card 2 -->
+      <div class="tactical-card rounded-xl p-5 flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-bold text-gray-400 font-tactical uppercase tracking-wider">Squad K/D Avg</span>
+          <div class="p-1.5 rounded-lg bg-red-500/10 text-red-500">
+            <!-- Swords Icon -->
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14.5 17.5L3 6V3h3l11.5 11.5M13 19l6-6M19 19l4-4M19 13l3 3M5 5L3 3"></path></svg>
+          </div>
+        </div>
+        <div>
+          <h3 id="stat-avg-kd" class="text-2xl md:text-3xl font-bold text-white font-tactical tracking-tight">0.00</h3>
+          <p class="text-[10px] text-gray-500 mt-1 font-mono-tactical">Combat efficacy ratio</p>
+        </div>
+      </div>
 
-    <a href="login.html">
-      <button>Admin Login</button>
-    </a>
-  </div>
-</section>
+      <!-- Stat Card 3 -->
+      <div class="tactical-card rounded-xl p-5 flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-bold text-gray-400 font-tactical uppercase tracking-wider">Top-Tier Aces</span>
+          <div class="p-1.5 rounded-lg bg-amber-500/10 text-amber-500">
+            <!-- Award Icon -->
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"></circle><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12"></path></svg>
+          </div>
+        </div>
+        <div>
+          <h3 id="stat-ace-count" class="text-2xl md:text-3xl font-bold text-white font-tactical tracking-tight">0</h3>
+          <p class="text-[10px] text-gray-500 mt-1 font-mono-tactical">Ace / Conqueror elites</p>
+        </div>
+      </div>
 
-<section class="features">
+      <!-- Stat Card 4 -->
+      <div class="tactical-card rounded-xl p-5 flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-bold text-gray-400 font-tactical uppercase tracking-wider">Combat Ready</span>
+          <div class="p-1.5 rounded-lg bg-green-500/10 text-green-500">
+            <!-- Zap Icon -->
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          </div>
+        </div>
+        <div>
+          <h3 id="stat-active-count" class="text-2xl md:text-3xl font-bold text-green-400 font-tactical tracking-tight">0</h3>
+          <p class="text-[10px] text-gray-500 mt-1 font-mono-tactical">Active & Online members</p>
+        </div>
+      </div>
 
-  <div class="card">
-    <h2>👥 Friends Database</h2>
-    <p>Save unlimited BGMI friends with profile details.</p>
-  </div>
+    </section>
 
-  <div class="card">
-    <h2>🏆 Leaderboard</h2>
-    <p>Track the top players and their rankings.</p>
-  </div>
+    <!-- Showcase & Roster Highlight Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      <!-- Top Performer Spotlight Card -->
+      <div class="tactical-card rounded-2xl p-6 lg:col-span-1 flex flex-col justify-between relative overflow-hidden bg-gradient-to-b from-yellow-500/5 to-transparent">
+        <div class="absolute right-3 top-3 px-3 py-1 rounded bg-yellow-500/10 border border-yellow-500/20 text-[10px] font-bold text-yellow-500 font-mono-tactical uppercase tracking-widest">
+          SQUAD MVP
+        </div>
+        
+        <div>
+          <h4 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 font-mono-tactical">Spotlight Player</h4>
+          
+          <div class="flex items-center gap-4 mb-6">
+            <div id="mvp-image-container" class="w-16 h-16 rounded-xl border border-yellow-500/20 overflow-hidden bg-zinc-900/60 flex items-center justify-center">
+              <svg class="w-8 h-8 text-zinc-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"></path></svg>
+            </div>
+            <div>
+              <h5 id="mvp-name" class="text-xl font-bold text-white font-tactical">No Players Yet</h5>
+              <div class="flex items-center gap-1.5 mt-0.5">
+                <span id="mvp-role" class="px-2 py-0.5 rounded text-[10px] font-bold bg-zinc-800 text-zinc-400 font-mono-tactical">N/A</span>
+                <span id="mvp-tier" class="text-xs text-yellow-500 font-semibold">Unknown Tier</span>
+              </div>
+            </div>
+          </div>
 
-  <div class="card">
-    <h2>📷 Image Upload</h2>
-    <p>Upload player profile pictures securely.</p>
-  </div>
+          <div class="grid grid-cols-3 gap-3 p-3 bg-zinc-900/40 rounded-xl border border-zinc-800 font-mono-tactical text-center mb-6">
+            <div>
+              <span class="text-[10px] text-gray-500 block">K/D RATIO</span>
+              <span id="mvp-kd" class="text-sm font-bold text-white">0.00</span>
+            </div>
+            <div>
+              <span class="text-[10px] text-gray-500 block">MATCHES</span>
+              <span id="mvp-matches" class="text-sm font-bold text-white">0</span>
+            </div>
+            <div>
+              <span class="text-[10px] text-gray-500 block">WINS</span>
+              <span id="mvp-wins" class="text-sm font-bold text-white">0</span>
+            </div>
+          </div>
+        </div>
 
-  <div class="card">
-    <h2>🔍 Search</h2>
-    <p>Find any player instantly with powerful search.</p>
-  </div>
+        <a href="leaderboard.html" class="w-full text-center py-2.5 rounded-xl text-xs font-semibold text-yellow-500 bg-yellow-500/5 border border-yellow-500/10 hover:bg-yellow-500/10 hover:border-yellow-500/20 transition-all font-tactical uppercase">
+          Compare in Leaderboard
+        </a>
+      </div>
 
-</section>
+      <!-- Live Roster Mini-Board -->
+      <div class="tactical-card rounded-2xl p-6 lg:col-span-2 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h4 class="text-sm font-bold text-white uppercase tracking-wider font-tactical">Recent Active Recruits</h4>
+              <p class="text-xs text-gray-400 mt-0.5">Live status feed of squad members</p>
+            </div>
+            <a href="friends.html" class="text-xs font-semibold text-yellow-500 hover:underline flex items-center gap-1">
+              All Members &rarr;
+            </a>
+          </div>
 
-<footer>
-  <p>© 2026 BGMI Friends Vault | Made by Shubham</p>
-</footer>
+          <div id="mini-roster-list" class="divide-y divide-zinc-800/60 min-h-[180px]">
+            <!-- Loading Indicator -->
+            <div class="flex flex-col items-center justify-center py-10 text-gray-500">
+              <svg class="animate-spin h-5 w-5 text-yellow-500 mb-2" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <span class="text-xs font-mono-tactical">SECURE CONNECTING...</span>
+            </div>
+          </div>
+        </div>
 
-<script src="script.js"></script>
+        <div class="mt-4 pt-4 border-t border-zinc-800 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-2">
+          <span>Communication protocols optimized on Firebase v10</span>
+          <span class="font-mono-tactical">UTC TIMESTAMP ACTIVE</span>
+        </div>
+      </div>
 
+    </div>
+
+  </main>
+
+  <!-- Tactical Footer -->
+  <footer class="border-t border-yellow-500/10 bg-[#0f1115] py-8 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="text-amber-500 font-black font-tactical text-sm">BFV</span>
+        <span class="text-gray-500">|</span>
+        <span class="text-xs text-gray-400 font-tactical">Battlegrounds Friends Vault &copy; 2026. Tactical Squad Hub.</span>
+      </div>
+      <div class="flex gap-4 text-xs font-semibold font-tactical">
+        <a href="friends.html" class="text-gray-400 hover:text-white transition-all">Roster</a>
+        <a href="leaderboard.html" class="text-gray-400 hover:text-white transition-all">Leaderboard</a>
+        <a href="admin.html" class="text-gray-400 hover:text-white transition-all">Admin Controls</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="script.js"></script>
 </body>
 </html>

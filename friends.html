@@ -1,51 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Friends - BGMI Friends Vault</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BGMI Friends Vault - Squad Roster</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            tactical: {
+              black: '#0d0f12',
+              dark: '#0f1115',
+              card: '#11151c',
+              gold: '#eab308',
+            }
+          }
+        }
+      }
+    }
+  </script>
 </head>
+<body class="bg-tactical-black bg-tactical-grid text-gray-100 min-h-screen flex flex-col justify-between">
 
-<body>
+  <!-- Header -->
+  <header class="border-b border-yellow-500/10 bg-[#0f1115]/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-amber-600 to-yellow-400 p-0.5 shadow-lg shadow-amber-500/10">
+          <div class="w-full h-full bg-[#0d0f12] rounded-[7px] flex items-center justify-center">
+            <span class="text-amber-500 font-bold text-lg font-tactical">BF</span>
+          </div>
+        </div>
+        <div>
+          <h1 class="text-base font-bold text-white tracking-tight font-tactical">BGMI FRIENDS VAULT</h1>
+          <p class="text-[9px] text-amber-500 font-bold tracking-widest font-mono-tactical">ROSTER COMMS</p>
+        </div>
+      </a>
 
-<header class="navbar">
-<div class="logo">🎮 BGMI Friends Vault</div>
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-2">
+        <a href="index.html" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-400 hover:text-white transition-all font-tactical">Dashboard</a>
+        <a href="friends.html" class="px-3 py-1.5 rounded-md text-sm font-semibold text-yellow-500 bg-yellow-500/10 border border-yellow-500/20 font-tactical">Squad Roster</a>
+        <a href="leaderboard.html" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-400 hover:text-white transition-all font-tactical">Leaderboard</a>
+        <a href="admin.html" id="admin-nav-link" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-400 hover:text-white transition-all font-tactical flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>Admin Panel</a>
+      </nav>
 
-<nav>
-<a href="index.html">Home</a>
-<a href="friends.html">Friends</a>
-<a href="leaderboard.html">Leaderboard</a>
-<a href="login.html">Login</a>
-</nav>
-</header>
+      <!-- Right Actions -->
+      <div class="flex items-center gap-3">
+        <span id="auth-badge" class="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-zinc-800 text-zinc-400 border border-zinc-700 font-mono-tactical">SECURE COMMS</span>
+        <div id="user-info" class="hidden items-center gap-2">
+          <span id="user-display-email" class="text-xs text-gray-400 font-mono-tactical"></span>
+          <button id="logout-btn" class="text-xs font-semibold px-2.5 py-1.5 rounded-md text-red-400 bg-red-500/5 hover:bg-red-500/10 border border-red-500/20 transition-all font-tactical">Sign Out</button>
+        </div>
+        <a href="login.html" id="signin-btn" class="px-3.5 py-1.5 rounded-lg text-xs font-bold text-black bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-600 hover:to-yellow-500 transition-all shadow-lg shadow-amber-500/10 font-tactical">
+          Admin Sign In
+        </a>
+      </div>
+    </div>
+  </header>
 
-<section class="hero">
+  <!-- Main Roster Area -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Title Section -->
+    <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div>
+        <h2 class="text-2xl md:text-3xl font-black text-white font-tactical uppercase tracking-tight">SQUAD ROSTER</h2>
+        <p class="text-xs text-gray-400 mt-1 font-mono-tactical">REAL-TIME COMMUNICATOR NETWORK</p>
+      </div>
+      <!-- Add new friend shortcut for admins -->
+      <div id="admin-add-shortcut" class="hidden">
+        <a href="admin.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-black bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 transition-all font-tactical uppercase shadow-md shadow-yellow-500/10">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg>
+          Add New Player
+        </a>
+      </div>
+    </div>
 
-<h1>Friends Database</h1>
+    <!-- Search & Filters Bar -->
+    <section class="tactical-card rounded-2xl p-6 mb-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        
+        <!-- Search bar -->
+        <div class="md:col-span-1">
+          <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 font-tactical">Search Squad</label>
+          <div class="relative">
+            <input type="text" id="search-input" placeholder="Search name or ID..." 
+              class="w-full px-3.5 py-2 rounded-xl bg-zinc-950/60 border border-zinc-800 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500/40 transition-all font-tactical">
+          </div>
+        </div>
 
-<p>
-All your BGMI teammates will appear here.
-</p>
+        <!-- Filter Role -->
+        <div>
+          <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 font-tactical">Filter by Role</label>
+          <select id="filter-role" class="w-full px-3 py-2 rounded-xl bg-zinc-950/60 border border-zinc-800 text-sm text-gray-300 focus:outline-none focus:border-yellow-500/40 transition-all font-tactical">
+            <option value="All">All Roles</option>
+            <option value="Assaulter">Assaulter</option>
+            <option value="Sniper">Sniper</option>
+            <option value="IGL">IGL</option>
+            <option value="Support">Support</option>
+            <option value="Scout">Scout</option>
+            <option value="All-Rounder">All-Rounder</option>
+          </select>
+        </div>
 
-<br>
+        <!-- Filter Tier -->
+        <div>
+          <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 font-tactical">Filter by Tier</label>
+          <select id="filter-tier" class="w-full px-3 py-2 rounded-xl bg-zinc-950/60 border border-zinc-800 text-sm text-gray-300 focus:outline-none focus:border-yellow-500/40 transition-all font-tactical">
+            <option value="All">All Tiers</option>
+            <option value="Conqueror">Conqueror</option>
+            <option value="Ace Dominator">Ace Dominator</option>
+            <option value="Ace Master">Ace Master</option>
+            <option value="Ace">Ace</option>
+            <option value="Crown">Crown</option>
+            <option value="Diamond">Diamond</option>
+            <option value="Platinum">Platinum</option>
+            <option value="Gold">Gold</option>
+            <option value="Silver">Silver</option>
+            <option value="Bronze">Bronze</option>
+          </select>
+        </div>
 
-<input type="text" placeholder="🔍 Search Friend..." class="search-box">
+        <!-- Filter Status -->
+        <div>
+          <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 font-tactical">Combat Status</label>
+          <select id="filter-status" class="w-full px-3 py-2 rounded-xl bg-zinc-950/60 border border-zinc-800 text-sm text-gray-300 focus:outline-none focus:border-yellow-500/40 transition-all font-tactical">
+            <option value="All">All Statuses</option>
+            <option value="Online">Online</option>
+            <option value="In-Game">In-Game</option>
+            <option value="Offline">Offline</option>
+          </select>
+        </div>
 
-<br><br>
+      </div>
 
-<div class="features">
+      <!-- Reset and Results Counters -->
+      <div class="mt-4 pt-4 border-t border-zinc-800/60 flex items-center justify-between text-xs text-gray-500">
+        <span id="results-count">Showing 0 matching squad members</span>
+        <button id="reset-filters-btn" class="text-xs font-semibold text-yellow-500 hover:text-yellow-400 transition-colors font-tactical">
+          Reset Filter Matrix
+        </button>
+      </div>
+    </section>
 
-<div class="card">
-<h2>No Friends Yet</h2>
-<p>Add your first BGMI friend from the Admin Panel.</p>
-</div>
+    <!-- Squad Grid -->
+    <section id="friends-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Loading Roster -->
+      <div class="col-span-full flex flex-col items-center justify-center py-20 text-gray-500">
+        <svg class="animate-spin h-8 w-8 text-yellow-500 mb-3" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span class="text-xs font-mono-tactical uppercase tracking-widest">LOADING SQUAD VAULT COMMUNICATIONS...</span>
+      </div>
+    </section>
 
-</div>
+  </main>
 
-</section>
+  <!-- Player Detail Modal -->
+  <div id="detail-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="tactical-card rounded-2xl w-full max-w-lg overflow-hidden animate-fade-in relative">
+      <!-- Close button -->
+      <button id="modal-close" class="absolute right-4 top-4 text-gray-400 hover:text-white p-1 rounded-lg bg-zinc-900 border border-zinc-800 transition-all z-10">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+      </button>
 
-<script src="script.js"></script>
+      <!-- Modal Body -->
+      <div id="modal-body"></div>
+    </div>
+  </div>
 
+  <!-- Footer -->
+  <footer class="border-t border-yellow-500/10 bg-[#0f1115] py-8 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="text-amber-500 font-black font-tactical text-sm">BFV</span>
+        <span class="text-gray-500">|</span>
+        <span class="text-xs text-gray-400 font-tactical">Battlegrounds Friends Vault &copy; 2026. Roster Comm-Link.</span>
+      </div>
+      <div class="flex gap-4 text-xs font-semibold font-tactical">
+        <a href="index.html" class="text-gray-400 hover:text-white transition-all">Dashboard</a>
+        <a href="friends.html" class="text-yellow-500 font-bold">Roster</a>
+        <a href="leaderboard.html" class="text-gray-400 hover:text-white transition-all">Leaderboard</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="friends.js"></script>
 </body>
 </html>

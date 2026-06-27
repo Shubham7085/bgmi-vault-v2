@@ -1,52 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Login</title>
-
-<link rel="stylesheet" href="style.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BGMI Friends Vault - Admin Login</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            tactical: {
+              black: '#0d0f12',
+              dark: '#0f1115',
+              card: '#11151c',
+              gold: '#eab308',
+            }
+          }
+        }
+      }
+    }
+  </script>
 </head>
+<body class="bg-tactical-black bg-tactical-grid text-gray-100 min-h-screen flex flex-col justify-between">
 
-<body>
+  <!-- Minimal Header -->
+  <header class="border-b border-yellow-500/10 bg-[#0f1115]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-amber-600 to-yellow-400 p-0.5 shadow-lg shadow-amber-500/10">
+          <div class="w-full h-full bg-[#0d0f12] rounded-[7px] flex items-center justify-center">
+            <span class="text-amber-500 font-bold text-lg font-tactical">BF</span>
+          </div>
+        </div>
+        <div>
+          <h1 class="text-base font-bold text-white tracking-tight font-tactical">BGMI FRIENDS VAULT</h1>
+          <p class="text-[9px] text-amber-500 font-bold tracking-widest font-mono-tactical">SECURED COMMS</p>
+        </div>
+      </a>
+      <a href="index.html" class="text-xs font-semibold text-gray-400 hover:text-white transition-all flex items-center gap-1 font-tactical">
+        &larr; Back to Dashboard
+      </a>
+    </div>
+  </header>
 
-<header class="navbar">
+  <!-- Login Form Container -->
+  <main class="flex-grow flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-md">
+      
+      <!-- Logo Accent -->
+      <div class="flex flex-col items-center mb-8">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-yellow-500 to-amber-500 p-0.5 shadow-lg shadow-yellow-500/20 mb-3 flex items-center justify-center">
+          <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </div>
+        <h2 class="text-2xl font-black text-white tracking-tight font-tactical uppercase">ADMIN LOGIN</h2>
+        <p class="text-xs text-amber-500 font-semibold font-mono-tactical tracking-widest mt-1">SQUAD DEPLOYMENT HUB</p>
+      </div>
 
-<div class="logo">
-🎮 BGMI Friends Vault
-</div>
+      <!-- Login Card -->
+      <div class="tactical-card rounded-2xl p-8 relative overflow-hidden">
+        
+        <!-- Error Alerts -->
+        <div id="error-alert" class="hidden mb-5 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-xs text-red-400 font-mono-tactical">
+          Failed to authenticate. Verify credentials.
+        </div>
 
-<nav>
-<a href="index.html">Home</a>
-<a href="friends.html">Friends</a>
-<a href="leaderboard.html">Leaderboard</a>
-<a href="login.html">Login</a>
-</nav>
+        <form id="login-form" class="space-y-5">
+          <!-- Email Input -->
+          <div>
+            <label for="email" class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 font-tactical">Admin Email Address</label>
+            <div class="relative">
+              <input type="email" id="email" required placeholder="admin@squad.com" 
+                class="w-full px-4 py-3 rounded-xl bg-zinc-900/60 border border-zinc-800 text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500/50 focus:ring-1 focus:ring-yellow-500/20 transition-all text-sm font-tactical">
+            </div>
+          </div>
 
-</header>
+          <!-- Password Input -->
+          <div>
+            <label for="password" class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 font-tactical">Security Password</label>
+            <input type="password" id="password" required placeholder="••••••••••••" 
+              class="w-full px-4 py-3 rounded-xl bg-zinc-900/60 border border-zinc-800 text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500/50 focus:ring-1 focus:ring-yellow-500/20 transition-all text-sm font-tactical">
+          </div>
 
-<section class="hero">
+          <!-- Action Button -->
+          <button type="submit" id="submit-btn" class="w-full py-3.5 rounded-xl text-xs font-bold text-black bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 shadow-lg shadow-yellow-500/10 transition-all font-tactical uppercase tracking-wider flex items-center justify-center gap-2">
+            Authenticate Comms
+          </button>
+        </form>
 
-<h1>Admin Login</h1>
+        <!-- Credentials Helper Box -->
+        <div class="mt-6 pt-6 border-t border-zinc-800/80">
+          <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2 font-mono-tactical">Demo Admin Credentials</h4>
+          <div class="bg-zinc-950/60 border border-zinc-900 rounded-lg p-3 font-mono-tactical text-xs space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-gray-500">EMAIL:</span>
+              <span class="text-yellow-500/90 font-bold select-all">admin@squad.com</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-gray-500">PASSWORD:</span>
+              <span class="text-yellow-500/90 font-bold select-all">squadpassword</span>
+            </div>
+          </div>
+        </div>
 
-<input type="email" id="email" placeholder="Email" class="search-box">
+      </div>
 
-<br><br>
+    </div>
+  </main>
 
-<input type="password" id="password" placeholder="Password" class="search-box">
+  <!-- Footer -->
+  <footer class="border-t border-yellow-500/10 bg-[#0f1115] py-6 text-center">
+    <p class="text-[11px] text-gray-500 font-tactical">Battlegrounds Friends Vault &copy; 2026. Secure Admin Interface.</p>
+  </footer>
 
-<br><br>
-
-<button id="loginBtn">
-Login
-</button>
-
-<p id="status"></p>
-
-</section>
-
-<script type="module" src="login.js"></script>
-
+  <!-- Scripts -->
+  <script type="module" src="login.js"></script>
 </body>
 </html>
