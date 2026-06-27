@@ -1,10 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Admin Login</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login</title>
+
+<link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
-  <h1>Admin Login</h1>
-  <p>Login system coming soon...</p>
+
+<header class="navbar">
+
+<div class="logo">
+🎮 BGMI Friends Vault
+</div>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="friends.html">Friends</a>
+<a href="leaderboard.html">Leaderboard</a>
+<a href="login.html">Login</a>
+</nav>
+
+</header>
+
+<section class="hero">
+
+<h1>Admin Login</h1>
+
+<input type="email" id="email" placeholder="Email" class="search-box">
+
+<br><br>
+
+<input type="password" id="password" placeholder="Password" class="search-box">
+
+<br><br>
+
+<button id="loginBtn">
+Login
+</button>
+
+<p id="status"></p>
+
+</section>
+
+<script type="module" src="login.js"></script>
+
 </body>
 </html>
